@@ -1,7 +1,6 @@
-let db = [
-  {id: 1, todo: "asdb"},
-  {id: 2, todo: "asdb"}
-];
+axios.get('todolist')
+  .then(res=>console.log(res.data))
+  .catch(err=>console.log(err));
 
 db.forEach(el => {
   // li태그 생성

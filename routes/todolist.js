@@ -3,7 +3,10 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('get');
+  res.send([
+    {id: 1, todo: "asdb"},
+    {id: 2, todo: "asdb"}
+  ]);
 });
 
 router.post('/', function(req, res, next) {
