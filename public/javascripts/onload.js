@@ -3,6 +3,7 @@ let topIndex;
 axios.get('todolist')
   .then(res=>{
     // db 할당하기
+    serverDB = res.data;
     db = res.data;
     // 가장 높은 인덱스 받기
     topIndex = db[db.length-1].id;
