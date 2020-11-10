@@ -1,6 +1,13 @@
+let db;
+let topIndex;
 axios.get('todolist')
   .then(res=>{
+    // db 할당하기
+    db = res.data;
+    // 가장 높은 인덱스 받기
+    topIndex = db[db.length-1].id;
     res.data.forEach(el => {
+      const id = el.id;
       // li태그 생성
       const li = document.createElement('li');
       // 지우기 버튼 생성
@@ -32,6 +39,9 @@ axios.get('todolist')
           text.innerText = ipEdit.value;
           ipEdit.classList.add('hide');
           text.classList.remove('hide');
+          db.forEach(i => {
+            if(i.id==id) db.todo = ipEdit.value;
+          });
         }
       })
       // 지우기 버튼 class 달아주기
@@ -41,6 +51,8 @@ axios.get('todolist')
       // 클릭하면 상위요소(li태그) 제거하기
       btnDelete.addEventListener('click',function() {
         this.parentElement.remove();
+        for (let i = 0; i < db.length; i++)
+          if(db[i].id == id) db.splice(i, 1);
       });
       // li태그에 지우기 버튼 달기
       li.appendChild(text);

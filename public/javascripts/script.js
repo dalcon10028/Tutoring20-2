@@ -32,6 +32,9 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
         text.innerText = ipEdit.value;
         ipEdit.classList.add('hide');
         text.classList.remove('hide');
+        db.forEach(i => {
+          if(i.id==id) db.todo = ipEdit.value;
+        });
       }
     })
     // 지우기 버튼 class 달아주기
@@ -41,6 +44,8 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
     // 클릭하면 상위요소(li태그) 제거하기
     btnDelete.addEventListener('click',function() {
       this.parentElement.remove();
+      for (let i = 0; i < db.length; i++)
+        if(db[i].id == id) db.splice(i, 1);
     });
     // li태그에 지우기 버튼 달기
     li.appendChild(text);
@@ -48,7 +53,10 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
     li.appendChild(ipEdit);
     // input 박스가 비어있을 경우
     if (userInput==='') alert("비어있습니다.");
-    else document.getElementsByClassName('list-group')[0].appendChild(li);
+    else {
+      document.getElementsByClassName('list-group')[0].appendChild(li);
+      db.push({id: ++topIndex, todo: userInput});
+    }
     // 모든 과정이 끝나면 비우기
     document.getElementById('userInput').value = "";
   }
