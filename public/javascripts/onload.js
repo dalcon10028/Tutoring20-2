@@ -73,6 +73,7 @@ axios.get('todolist')
       // input 박스가 비어있을 경우
       if (userInput==='') alert("비어있습니다.");
       else document.getElementsByClassName('list-group')[0].appendChild(li);
+      // 
     });  
   })
   .catch(err=>console.log(err));

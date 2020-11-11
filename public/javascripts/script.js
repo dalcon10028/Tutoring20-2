@@ -71,6 +71,10 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
     else {
       document.getElementsByClassName('list-group')[0].appendChild(li);
       db.push({id: topIndex, todo: userInput});
+      // 서버로 전송
+      axios.post('todolist', {todo: userInput})
+        .then(res=>console.log(res))
+        .catch(err=>console.log(err));
     }
     // 모든 과정이 끝나면 비우기
     document.getElementById('userInput').value = "";
