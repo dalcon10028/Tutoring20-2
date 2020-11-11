@@ -38,7 +38,10 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
           if(i.id==this.parentElement.id){ 
             i.todo = ipEdit.value;
             axios.put('todolist', {id: i.id, todo: i.todo})
-              .then(res=>console.log(res))
+              .then(res=>{
+                $('#message').text("성공적으로 수정되었습니다!");
+                $('#toast').toast('show');
+              })
               .catch(err=>console.log(err));
           }
         });
@@ -54,7 +57,10 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
         for (let i = 0; i < db.length; i++)
           if(db[i].id == this.parentElement.id){
             axios.delete(`todolist/${db[i].id}`)
-              .then(res=>console.log(res))
+              .then(res=>{
+                $('#message').text("성공적으로 제거되었습니다!");
+                $('#toast').toast('show');
+              })
               .catch(err=>console.log(err));
             db.splice(i, 1);
           }
@@ -65,7 +71,8 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
     li.appendChild(ipEdit);
     // input 박스가 비어있을 경우
     if (userInput==='') {
-      alert("비어있습니다.");
+      $('#message').text("입력값을 넣어주세요!");
+      $('#toast').toast('show');
       topIndex--;
     }
     else {
@@ -73,7 +80,10 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
       db.push({id: topIndex, todo: userInput});
       // 서버로 전송
       axios.post('todolist', {todo: userInput})
-        .then(res=>console.log(res))
+        .then(res=>{
+          $('#message').text("성공적으로 추가되었습니다!");
+          $('#toast').toast('show');
+        })
         .catch(err=>console.log(err));
     }
     // 모든 과정이 끝나면 비우기

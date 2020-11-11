@@ -64,7 +64,10 @@ axios.get('todolist')
         for (let i = 0; i < db.length; i++)
           if(db[i].id == this.parentElement.id){
             axios.delete(`todolist/${db[i].id}`)
-              .then(res=>console.log(res))
+              .then(res=>{
+                $('#message').text("성공적으로 제거되었습니다!");
+                $('#toast').toast('show');
+              })
               .catch(err=>console.log(err));
             db.splice(i, 1);
           }
@@ -73,10 +76,8 @@ axios.get('todolist')
       li.appendChild(text);
       li.appendChild(btnDelete);
       li.appendChild(ipEdit);
-      // input 박스가 비어있을 경우
-      if (userInput==='') alert("비어있습니다.");
-      else document.getElementsByClassName('list-group')[0].appendChild(li);
-      // 
+      
+      document.getElementsByClassName('list-group')[0].appendChild(li); 
     });  
   })
   .catch(err=>console.log(err));
