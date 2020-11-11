@@ -22,7 +22,6 @@ router.post('/', function(req, res, next) {
 });
 
 router.put('/', function(req, res, next) {
-  console.log(req.body)
   getConnection((conn) => {
     conn.query('update yeon set todo = ? where id = ?', [req.body.todo, req.body.id],(err, result, fields)=>{
       res.send(true);
@@ -32,7 +31,12 @@ router.put('/', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
-  res.send('delete '+req.params.id);
+  getConnection((conn) => {
+    conn.query('delete from yeon where id = ?', [req.params.id],(err, result, fields)=>{
+      res.send(true);
+    });
+    conn.release();
+  });
 });
 
 module.exports = router;
