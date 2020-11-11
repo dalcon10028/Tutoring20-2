@@ -1,8 +1,15 @@
 var express = require('express');
 var router = express.Router();
+const getConnection = require('../my_modules/db');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  getConnection((conn) => {
+    conn.query('select * from yeon', (err, result, fields)=>{
+      console.log(result);
+    });
+    conn.release();
+  });  
   res.send([
     {id: 1, todo: "asdb"},
     {id: 2, todo: "asdb"}
