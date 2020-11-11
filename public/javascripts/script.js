@@ -36,8 +36,8 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
         text.classList.remove('hide');
         db.forEach(i => {
           if(i.id==this.parentElement.id){ 
-            db.todo = ipEdit.value;
-            axios.put('todolist', {id: i.id})
+            i.todo = ipEdit.value;
+            axios.put('todolist', {id: i.id, todo: i.todo})
               .then(res=>console.log(res))
               .catch(err=>console.log(err));
           }

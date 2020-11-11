@@ -6,22 +6,29 @@ const getConnection = require('../my_modules/db');
 router.get('/', function(req, res, next) {
   getConnection((conn) => {
     conn.query('select * from yeon', (err, result, fields)=>{
-      console.log(result);
+      res.send(result);
     });
     conn.release();
-  });  
-  res.send([
-    {id: 1, todo: "asdb"},
-    {id: 2, todo: "asdb"}
-  ]);
+  });
 });
 
 router.post('/', function(req, res, next) {
-  res.send('post '+ req.body.todo);
+  getConnection((conn) => {
+    conn.query('insert into yeon(todo) values (?)', [req.body.todo],(err, result, fields)=>{
+      res.send(true);
+    });
+    conn.release();
+  });
 });
 
 router.put('/', function(req, res, next) {
-  res.send('put');
+  console.log(req.body)
+  getConnection((conn) => {
+    conn.query('update yeon set todo = ? where id = ?', [req.body.todo, req.body.id],(err, result, fields)=>{
+      res.send(true);
+    });
+    conn.release();
+  });
 });
 
 router.delete('/:id', function(req, res, next) {
