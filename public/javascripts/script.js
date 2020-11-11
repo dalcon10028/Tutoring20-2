@@ -3,6 +3,8 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
   if(e.key === 'Enter'){
     // li태그 생성
     const li = document.createElement('li');
+    // id 할당하기
+    li.id = ++topIndex;
     // 지우기 버튼 생성
     const btnDelete = document.createElement('button');
     // 텍스트 영역 생성
@@ -27,13 +29,18 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
     ipEdit.type = 'text';
     ipEdit.classList.add('form-control', 'form-control-sm', 'hide');
     // 수정하기 엔터 눌렀을 때
-    ipEdit.addEventListener('keypress', (e)=>{
+    ipEdit.addEventListener('keypress', function(e) {
       if(e.key === 'Enter'){
         text.innerText = ipEdit.value;
         ipEdit.classList.add('hide');
         text.classList.remove('hide');
         db.forEach(i => {
-          if(i.id==id) db.todo = ipEdit.value;
+          if(i.id==this.parentElement.id){ 
+            db.todo = ipEdit.value;
+            axios.put('todolist', {id: i.id})
+              .then(res=>console.log(res))
+              .catch(err=>console.log(err));
+          }
         });
       }
     })
@@ -44,18 +51,26 @@ document.getElementById('userInput').addEventListener('keypress', (e)=>{
     // 클릭하면 상위요소(li태그) 제거하기
     btnDelete.addEventListener('click',function() {
       this.parentElement.remove();
-      for (let i = 0; i < db.length; i++)
-        if(db[i].id == id) db.splice(i, 1);
+        for (let i = 0; i < db.length; i++)
+          if(db[i].id == this.parentElement.id){
+            axios.delete(`todolist/${db[i].id}`)
+              .then(res=>console.log(res))
+              .catch(err=>console.log(err));
+            db.splice(i, 1);
+          }
     });
     // li태그에 지우기 버튼 달기
     li.appendChild(text);
     li.appendChild(btnDelete);
     li.appendChild(ipEdit);
     // input 박스가 비어있을 경우
-    if (userInput==='') alert("비어있습니다.");
+    if (userInput==='') {
+      alert("비어있습니다.");
+      topIndex--;
+    }
     else {
       document.getElementsByClassName('list-group')[0].appendChild(li);
-      db.push({id: ++topIndex, todo: userInput});
+      db.push({id: topIndex, todo: userInput});
     }
     // 모든 과정이 끝나면 비우기
     document.getElementById('userInput').value = "";
