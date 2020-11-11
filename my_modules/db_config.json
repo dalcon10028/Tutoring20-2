@@ -1,5 +1,6 @@
 {
-  "host": "13.209.77.192:57790",
+  "host": "13.209.77.192",
+  "port": "57790",
   "user": "yeon",
   "password": "1028",
   "database": "tutoring",
