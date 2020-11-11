@@ -45,7 +45,10 @@ axios.get('todolist')
             if(i.id==this.parentElement.id){ 
               i.todo = ipEdit.value;
               axios.put('todolist', {id: i.id, todo: i.todo})
-                .then(res=>console.log(res))
+                .then(res=>{
+                  $('#message').text("성공적으로 수정되었습니다!");
+                  $('#toast').toast('show');
+                })
                 .catch(err=>console.log(err));
             }
           });
