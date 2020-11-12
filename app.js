@@ -1,5 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
+const session = require('express-session');
+const passport = require('passport');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -19,6 +21,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: '1028',
+  cookie: { maxAge: 60 * 60 * 1000 },
+  resave: true,
+  saveUninitialized: false
+}));
+app.use(passport.initialize()); // passport 구동
+app.use(passport.session()); // 세션 연결
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

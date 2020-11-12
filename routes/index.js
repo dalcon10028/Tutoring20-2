@@ -1,8 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const social_login = require('../my_modules/social_login');
 const KakaoStrategy = require('passport-kakao').Strategy;
+
+/*로그인 성공시 사용자 정보를 Session에 저장한다*/
+passport.serializeUser(function (user, done) {
+  done(null, user)
+});
+
+/*인증 후, 페이지 접근시 마다 사용자 정보를 Session에서 읽어옴.*/
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+
+// 로그인 판단 로직
+const authenticateUser = (req, res, next) => {
+  if (req.isAuthenticated()) next();
+  else res.redirect('/login');
+};
 
 // 로그인 처리 - 카카오
 passport.use('login-kakao', new KakaoStrategy({
@@ -16,7 +31,7 @@ passport.use('login-kakao', new KakaoStrategy({
 ));
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', authenticateUser, function(req, res, next) {
   res.render('index');
 });
 
