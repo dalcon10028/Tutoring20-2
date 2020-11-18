@@ -22,7 +22,7 @@ const authenticateUser = (req, res, next) => {
 // 로그인 처리 - 카카오
 passport.use('login-kakao', new KakaoStrategy({
 		clientID : '11648f24758196fb487c9f669f287019',
-		callbackURL : 'https://todolist-yxmum.run.goorm.io/login/kakao/callback' // 카카오 개발자 사이트에서 지정한 리다이렉트 URL 
+		callbackURL : 'http://localhost:3000/login/kakao/callback' // 카카오 개발자 사이트에서 지정한 리다이렉트 URL 
 	},
 	function(accessToken, refreshToken, profile, done) {
 		console.log(profile);
