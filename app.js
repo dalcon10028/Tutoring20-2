@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: '1028',
-  cookie: { maxAge: 60 * 60 * 1000 },
+  cookie: { maxAge: 60 * 60 * 1000 }, // 지속 시간 1시간 지속되게
   resave: true,
   saveUninitialized: false
 }));
