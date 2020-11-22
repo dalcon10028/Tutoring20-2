@@ -46,7 +46,7 @@ app.io.on('connection', (socket)=>{
   console.log('새로운 유저가 접속했습니다.');
   
   socket.on('send_message', (msg_data)=>{
-    console.log('전달받은 메세지 : '+ msg_data);
+    console.log(msg_data.user_name + ' : ' + msg_data.message);
     socket.broadcast.emit('send_message', msg_data);
   });
 });

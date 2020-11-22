@@ -12,12 +12,17 @@ $('#userinput').on('keypress', (e)=>{
     // 채팅 입력
     $('#chat_box').append(`<li class="list-group-item">나 : ${msg}</li>`);
     // 서버에 전송
-    console.log({'user_name': user_name, 'message': msg});
     socket.emit('send_message', {'user_name': user_name, 'message': msg});
+    scroll_down();
   }
 })
 
 socket.on('send_message',(msg_data)=>{
   // 채팅 입력
   $('#chat_box').append(`<li class="list-group-item">${msg_data.user_name} : ${msg_data.message}</li>`);
+  scroll_down();
 });
+
+function scroll_down() {
+  $("#chat_box").scrollTop($("#chat_box")[0].scrollHeight);
+}
