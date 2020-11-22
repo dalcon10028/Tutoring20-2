@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var todoListRouter = require('./routes/todolist');
 
 var app = express();
+app.io = require('socket.io')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,6 +39,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+// 소켓 연결
+app.io.on('connection', (socket)=>{
+  console.log('새로운 유저가 접속했습니다.');
 });
 
 module.exports = app;
