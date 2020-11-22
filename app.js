@@ -44,6 +44,11 @@ app.use(function(err, req, res, next) {
 // 소켓 연결
 app.io.on('connection', (socket)=>{
   console.log('새로운 유저가 접속했습니다.');
+  
+  socket.on('send_message', (msg_data)=>{
+    console.log('전달받은 메세지 : '+ msg_data);
+    socket.broadcast.emit('send_message', msg_data);
+  });
 });
 
 module.exports = app;
