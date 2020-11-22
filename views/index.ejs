@@ -12,7 +12,7 @@
     <div class="card border-danger mb-3" style="max-width: 100%; height: 70vh;">
       <div class="card-header text-center">채팅</div>
       <div class="card-body text-danger">
-        <ul class="list-group list-group-flush mb-3" style="height: 85%; overflow: scroll;">
+        <ul class="list-group list-group-flush mb-3" id="chat_box" style="height: 85%; overflow: scroll;">
           <li class="list-group-item">Cras justo odio</li>
         </ul>
         <div class="input-group mb-3">
@@ -29,7 +29,7 @@
               <a class="dropdown-item" onclick="document.getElementById('dropdown_name').innerText='하채민'">하채민</a>
             </div>
           </div>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" id="userinput">
         </div>
       </div>
     </div>
